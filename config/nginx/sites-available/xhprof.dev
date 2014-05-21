@@ -1,0 +1,17 @@
+server {
+    root /var/www/xhprof.dev/public;
+
+    server_name xhprof.dev www.xhprof.dev;
+    access_log  /var/log/nginx/xhprof.dev.access.log;
+    
+    include php_locations;
+
+    location @php {
+        fastcgi_pass   php-www;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME  /var/www/xhprof.dev/public/index.php;
+        fastcgi_param  SCRIPT_NAME      /index.php;
+        fastcgi_param  QUERY_STRING     $uri&$args;
+    }
+
+}

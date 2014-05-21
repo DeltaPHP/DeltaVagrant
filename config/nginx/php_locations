@@ -1,0 +1,21 @@
+index index.php index.html;
+
+location / {
+    try_files $uri $uri/ @php;
+    index index.php index.html;
+}
+
+location ^~ /\. {
+    deny all;
+}
+
+# deny access to .htaccess files, if Apache's document root
+location ~ /\.ht {
+    deny all;
+}
+
+#
+location ~ \.php$ {
+    fastcgi_pass php-www;
+    include fastcgi_params;
+}

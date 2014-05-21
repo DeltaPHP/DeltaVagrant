@@ -1,6 +1,6 @@
-# Contributing to VVV
+# Contributing to VVV or DeltaPHPVagrant
 
-Contributions to the VVV project are more than welcome.
+Contributions to the VVV or DeltaPHPVagrant project are more than welcome.
 
 ## Issues
 
@@ -16,7 +16,7 @@ Submit a pull request at any time, whether an issue has been created or not. It 
 
 We do ask that the pull request be submitted against the current **master** branch. Every effort is made to make the pull request as stable as possible before merging it in, so we aren't too worried. A list of stable releases is maintained as we go and can be used by anyone concerned by ongoing development.
 
-It may make sense that a feature branch is created so that several contributors can work together. In this case, it is possible that write access to the VVV repository will be given liberally. You may be asked to submit your pull request against a feature branch so that it can be merged and worked on with others before going in to master.
+It may make sense that a feature branch is created so that several contributors can work together. In this case, it is possible that write access to the VVV or DeltaPHPVagrant repository will be given liberally. You may be asked to submit your pull request against a feature branch so that it can be merged and worked on with others before going in to master.
 
 ## Milestones and Labels
 

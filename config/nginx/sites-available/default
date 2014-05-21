@@ -1,0 +1,20 @@
+server {
+     listen 80 default_server;
+     listen 443 ssl default_server;
+
+    root /var/www/default;   
+
+    server_name default.dev;
+    access_log  /var/log/nginx/default.dev.access.log;
+
+    include php_locations;
+
+    location @php {
+        fastcgi_pass   php-www;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME  /var/www/gisnote.dev/public/index.php;
+        fastcgi_param  SCRIPT_NAME      /index.php;
+        fastcgi_param  QUERY_STRING     $uri&$args;
+    }
+
+}

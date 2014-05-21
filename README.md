@@ -1,4 +1,8 @@
-# Varying Vagrant Vagrants
+#Vagrant Box for work on DeltaPHP project
+
+
+
+# Old docs from Varying Vagrant Vagrants
 
 Varying Vagrant Vagrants is an evolving [Vagrant](http://vagrantup.com) configuration focused on [WordPress](http://wordpress.org) development.
 

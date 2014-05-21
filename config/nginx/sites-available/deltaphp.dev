@@ -1,0 +1,17 @@
+server {
+    root /var/www/deltaphp.dev/public;
+
+    server_name deltaphp.dev;
+    access_log  /var/log/nginx/deltaphp.dev.access.log;
+
+    include php_locations;
+
+    location @php {
+        fastcgi_pass   php-www;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME  /var/www/deltaphp.dev/public/index.php;
+        fastcgi_param  SCRIPT_NAME      /index.php;
+        fastcgi_param  QUERY_STRING     $uri&$args;
+    }
+
+}
