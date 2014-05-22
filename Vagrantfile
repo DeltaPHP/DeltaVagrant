@@ -66,16 +66,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Provisioning
   #
   # Process one or more provisioning scripts depending on the existence of custom files.
-  #config.vm.provision :shell, :path => File.join( "provision", "provision.sh" )
+  config.vm.provision :shell, :path => File.join( "provision", "provision.sh" )
 
   #provisioning for special env
+
+  config.vm.synced_folder "database/", "/srv/database"
+
   if ENV['DV_MYSQL'] == 'yes'
-    config.vm.synced_folder "mysql/", "/srv/mysql"
     config.vm.provision :shell, :path => File.join( "provision", "mysql.sh" )
   end
 
   if ENV['DV_POSTGRES'] == 'yes'
-    config.vm.synced_folder "postgres/", "/srv/postgres"
     config.vm.provision :shell, :path => File.join( "provision", "postgres.sh" )
   end
     

@@ -30,7 +30,7 @@ fi
 # individual packages to it as required.
 
 #install base
-apt-get install -y wget curl ca-certificates
+apt-get install -y wget curl ca-certificates python-software-properties
 
 
 apt_package_install_list=()
@@ -50,6 +50,7 @@ apt_package_check_list=(
 
     # Extra PHP modules that we find useful
     php5-memcache
+    php5-memcached
     php5-imagick
     php5-mcrypt
     php5-imap
@@ -80,7 +81,6 @@ apt_package_check_list=(
     make
     vim
     colordiff
-    imagemagick
     optipng
     jpegoptim
     rsync
@@ -128,8 +128,8 @@ done
 
 
 # Provide our custom apt sources before running `apt-get update`
-cp /srv/config/apt/sources.list.d/nginx.list /etc/apt/sources.list.d/nginx.list
-cp /srv/config/apt/sources.list.d/dotdeb.list /etc/apt/sources.list.d/dotdeb.list
+cp --no-preserve=mode,ownership /srv/config/apt/sources.list.d/nginx.list /etc/apt/sources.list.d/nginx.list
+cp --no-preserve=mode,ownership /srv/config/apt/sources.list.d/dotdeb.list /etc/apt/sources.list.d/dotdeb.list
 
 echo "Linked custom apt sources"
 
@@ -219,17 +219,23 @@ echo -e "\nSetup configuration files..."
 
 echo " * /srv/config/nginx-config/               -> /etc/nginx/"
 rsync -vrlc /srv/config/nginx/ /etc/nginx/
+ngxensite default
+ngxensite xhprof.dev
 
 # Copy php-fpm configuration from local
 echo " * /srv/config/php5/               -> /etc/php5/"
 rsync -vrlc /srv/config/php5/ /etc/php5/
+php5enmod yaml
 
 # Copy memcached configuration from local
-cp /srv/config/memcached/memcached.conf /etc/memcached.conf
+cp --no-preserve=mode,ownership /srv/config/memcached/memcached.conf /etc/memcached.conf
 echo " * /srv/config/memcached/memcached.conf   -> /etc/memcached.conf"
 
 mkdir -p /var/www/default
+rsync -vrlc /srv/www/ /var/www/
 chown -R root:www-data /var/www/default
+
+useradd -r memcache
 
 # RESTART SERVICES
 #
@@ -269,7 +275,7 @@ if [[ $ping_result == *bytes?from* ]]; then
     # xdebug profiler)
     if [[ ! -d /var/www/default/webgrind ]]; then
         echo -e "\nDownloading webgrind, see https://github.com/jokkedk/webgrind"
-        git clone git://github.com/jokkedk/webgrind.git /srv/www/default/webgrind
+        git clone git://github.com/jokkedk/webgrind.git /var/www/default/webgrind
     else
         echo -e "\nUpdating webgrind..."
         cd /var/www/default/webgrind
